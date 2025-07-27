@@ -1,8 +1,10 @@
 package index
 
+import "time"
+
 type IndexEntry struct {
   Path string
   Name string
-	Date string
+	ModTime time.Time
 	Type string
 }
