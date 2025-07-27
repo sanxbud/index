@@ -1,12 +1,12 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright © 2025 Sanjay Budhia <snpbudhia@gmail.com>
 
 */
 package cmd
 
 import (
 	"fmt"
-
+  "github.com/sanxbud/index/internal/indexer"
 	"github.com/spf13/cobra"
 )
 
@@ -14,20 +14,36 @@ import (
 var buildCmd = &cobra.Command{
 	Use:   "build",
 	Short: "Builds the symlinked archive from --source dir to specified --dest dir",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long: `Builds the symlinked archive from --source dir to specified --dest dir. 
+	For example: index build --source ~/Pictures --dest ~/PicturesIndex
+`,
 	Run: func(cmd *cobra.Command, args []string) {
+		sourceDir, err := cmd.Flags().GetString("source")
+		if (err != nil){
+			fmt.Println("Error reading source directory. Please include --source sourcedir for the target directory.")
+			return
+		}
+		destDir, err := cmd.Flags().GetString("dest")
+		if (err != nil){
+			fmt.Println("Error reading destination directory. Please include --dest destination_dir for the intended index location.")
+			return
+		}
 		fmt.Println("Traversing: ",sourceDir)
+		if err:= indexer.Run(sourceDir); err != nil{
+			fmt.Println("Error traversing: ", err)
+		}
 		fmt.Println("Building archive in: ",destDir)
+		/*if err:= builder.Run(destDir); err!= nil{
+			fmt.Println("Error building :",err)
+		}*/
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(buildCmd)
+	buildCmd.Flags().String("source", "", "Source directory")
+	buildCmd.Flags().String("dest", "", "Destination directory to build index")
+	buildCmd.MarkFlagsRequiredTogether("source","dest")
   
 	// Here you will define your flags and configuration settings.
 
