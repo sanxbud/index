@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-  "github.com/sanxbud/index/internal/indexer"
+	"github.com/sanxbud/index/internal/indexer"
 	"github.com/spf13/cobra"
 )
 
@@ -34,19 +34,8 @@ var buildCmd = &cobra.Command{
 			fmt.Println("Error traversing: ", err)
 			return
 		}
-	  // validating functionality	
-		for fileType := range archive {
-				years := archive[fileType]
-    		
-				for year := range years {
-						months := years[year]
-				
-					for month := range months {
-								entries := months[month]
-            		fmt.Printf("%s/%s/%s → %d files\n", fileType, year, month, len(entries))
-        }
-    }
-}
+		// validating functionality	
+		archive.PrintSummary()
 		fmt.Println("Building archive in: ",destDir)
 		/*if err:= builder.Run(destDir); err!= nil{
 			fmt.Println("Error building :",err)
