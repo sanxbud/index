@@ -29,9 +29,24 @@ var buildCmd = &cobra.Command{
 			return
 		}
 		fmt.Println("Traversing: ",sourceDir)
-		if err:= indexer.Run(sourceDir); err != nil{
+		archive, err:= indexer.Run(sourceDir)
+		if err != nil{
 			fmt.Println("Error traversing: ", err)
+			return
 		}
+	  // validating functionality	
+		for fileType := range archive {
+				years := archive[fileType]
+    		
+				for year := range years {
+						months := years[year]
+				
+					for month := range months {
+								entries := months[month]
+            		fmt.Printf("%s/%s/%s → %d files\n", fileType, year, month, len(entries))
+        }
+    }
+}
 		fmt.Println("Building archive in: ",destDir)
 		/*if err:= builder.Run(destDir); err!= nil{
 			fmt.Println("Error building :",err)
