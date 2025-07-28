@@ -10,9 +10,13 @@ import (
 
 
 func Run(root string) (index.Archive, error) {
-								
+
 	currIndex := index.NewArchive()
-	filepath.WalkDir(root, func(currPath string, curr fs.DirEntry, err error) error {
+	absRoot, err:= filepath.Abs(root)
+	if err!= nil{
+		return currIndex, err
+	}
+	filepath.WalkDir(absRoot, func(currPath string, curr fs.DirEntry, err error) error {
 		if( !curr.IsDir()){
 			//we need to save path, date, type, in a big map to build
 			fileType := index.GetType(currPath)
