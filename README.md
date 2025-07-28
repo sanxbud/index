@@ -27,7 +27,7 @@ Each file in the index is a symlink, meaning you can instantly have an organized
 
 - `clean`  
   Prune a directory of broken symlinks.  
-  Example: `index clean ~/PicturesIndex`
+  Example: `index clean --target ~/PicturesIndex`
 
 
 ### Roadmap
