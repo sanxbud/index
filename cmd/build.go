@@ -7,6 +7,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/sanxbud/index/internal/indexer"
+	"github.com/sanxbud/index/internal/builder"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +16,7 @@ var buildCmd = &cobra.Command{
 	Use:   "build",
 	Short: "Builds the symlinked archive from --source dir to specified --dest dir",
 	Long: `Builds the symlinked archive from --source dir to specified --dest dir. 
-	For example: index build --source ~/Pictures --dest ~/PicturesIndex
+	Example: index build --source ~/Pictures --dest ~/PicturesIndex
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		sourceDir, err := cmd.Flags().GetString("source")
@@ -37,9 +38,11 @@ var buildCmd = &cobra.Command{
 		// validating functionality	
 		archive.PrintSummary()
 		fmt.Println("Building archive in: ",destDir)
-		/*if err:= builder.Run(destDir); err!= nil{
+		count, err := builder.Run(archive,destDir)
+		if err!= nil{
 			fmt.Println("Error building :",err)
-		}*/
+		}
+		fmt.Printf("Success! Index built at %s - %d linked\n",destDir,count)
 	},
 }
 
