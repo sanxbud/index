@@ -5,6 +5,16 @@ Point it at a folder full of images from over the years, in however many subfold
 It'll run through, analyze them, and build an output directory with all your media files organized by type and date.
 Each file in the index is a symlink, meaning you can instantly have an organized copy of your files with minimal additional disk usage, and without disturbing your original folder setup
 
+### Quick Start
+
+- **Download the latest binary** (Linux only for now):  
+  [Releases page](https://github.com/sanxbud/index/releases)
+
+- **Or build from source**:  
+  git clone https://github.com/sanxbud/index.git  
+  cd index  
+  go build -o index ./cmd/index  
+  ./index --help
 
 
 ### Commands
